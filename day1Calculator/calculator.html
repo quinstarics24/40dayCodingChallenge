@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Black Calculator</title>
+  <style>
+   * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.calculator {
+  background: #1e1e1e;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+  width: 100%;
+}
+
+.display {
+  background: #000;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-align: right;
+  position: relative;
+  overflow: hidden;
+}
+
+.display-history {
+  font-size: 14px;
+  color: #888;
+  min-height: 20px;
+  margin-bottom: 10px;
+}
+
+.display-current {
+  font-size: 36px;
+  font-weight: 300;
+  min-height: 50px;
+  line-height: 50px;
+  word-wrap: break-word;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.btn {
+  height: 70px;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.btn:hover:before {
+  transform: translateX(0);
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.btn.number {
+  background: #333;
+  color: #fff;
+}
+
+.btn.number:hover {
+  background: #444;
+}
+
+.btn.operator {
+  background: #ff9500;
+  color: #fff;
+}
+
+.btn.operator:hover {
+  background: #ffb143;
+}
+
+.btn.operator.active {
+  background: #fff;
+  color: #ff9500;
+}
+
+.btn.function {
+  background: #a6a6a6;
+  color: #000;
+}
+
+.btn.function:hover {
+  background: #c0c0c0;
+}
+
+.btn.equals {
+  background: #ff9500;
+  color: #fff;
+}
+
+.btn.equals:hover {
+  background: #ffb143;
+}
+
+.btn.zero {
+  grid-column: span 2;
+}
+
+.error {
+  color: #ff6b6b;
+}
+
+@media (max-width: 480px) {
+  .calculator {
+    padding: 20px;
+    margin: 10px;
+  }
+
+  .btn {
+    height: 60px;
+    font-size: 16px;
+  }
+
+  .display-current {
+    font-size: 28px;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="calculator">
+  <div class="display">
+    <div class="display-history" id="history"></div>
+    <div class="display-current" id="current">0</div>
+  </div>
+
+  <div class="buttons">
+    <button class="btn function" onclick="clearAll()">AC</button>
+    <button class="btn function" onclick="clearEntry()">C</button>
+    <button class="btn function" onclick="percentage()">%</button>
+    <button class="btn operator" onclick="setOperator('÷')" data-op="÷">÷</button>
+
+    <button class="btn number" onclick="appendNumber('7')">7</button>
+    <button class="btn number" onclick="appendNumber('8')">8</button>
+    <button class="btn number" onclick="appendNumber('9')">9</button>
+    <button class="btn operator" onclick="setOperator('×')" data-op="×">×</button>
+
+    <button class="btn number" onclick="appendNumber('4')">4</button>
+    <button class="btn number" onclick="appendNumber('5')">5</button>
+    <button class="btn number" onclick="appendNumber('6')">6</button>
+    <button class="btn operator" onclick="setOperator('-')" data-op="-">-</button>
+
+    <button class="btn number" onclick="appendNumber('1')">1</button>
+    <button class="btn number" onclick="appendNumber('2')">2</button>
+    <button class="btn number" onclick="appendNumber('3')">3</button>
+    <button class="btn operator" onclick="setOperator('+')" data-op="+">+</button>
+
+    <button class="btn number zero" onclick="appendNumber('0')">0</button>
+    <button class="btn number" onclick="appendDecimal()">.</button>
+    <button class="btn equals" onclick="calculate()">=</button>
+  </div>
+</div>
+
+
+
+
+<script>
+  class Calculator {
+    constructor() {
+      this.currentValue = '0';
+      this.previousValue = '';
+      this.operator = '';
+      this.waitingForOperand = false;
+      this.history = '';
+      this.shouldResetDisplay = false;
+    }
+
+    updateDisplay() {
+      const current = document.getElementById('current');
+      const history = document.getElementById('history');
+
+      current.textContent = this.currentValue;
+      history.textContent = this.history;
+
+      // Handle very long numbers
+      if (this.currentValue.length > 12) {
+        current.style.fontSize = '24px';
+      } else if (this.currentValue.length > 8) {
+        current.style.fontSize = '30px';
+      } else {
+        current.style.fontSize = '36px';
+      }
+    }
+
+    appendNumber(num) {
+      if (this.shouldResetDisplay) {
+        this.currentValue = '0';
+        this.shouldResetDisplay = false;
+      }
+
+      if (this.waitingForOperand) {
+        this.currentValue = num;
+        this.waitingForOperand = false;
+      } else {
+        this.currentValue = this.currentValue === '0' ? num : this.currentValue + num;
+      }
+
+      this.updateDisplay();
+    }
+
+    appendDecimal() {
+      if (this.shouldResetDisplay) {
+        this.currentValue = '0';
+        this.shouldResetDisplay = false;
+      }
+
+      if (this.waitingForOperand) {
+        this.currentValue = '0.';
+        this.waitingForOperand = false;
+      } else if (this.currentValue.indexOf('.') === -1) {
+        this.currentValue += '.';
+      }
+
+      this.updateDisplay();
+    }
+
+    setOperator(nextOperator) {
+      const inputValue = parseFloat(this.currentValue);
+
+      if (this.previousValue === '') {
+        this.previousValue = inputValue;
+      } else if (this.operator && !this.waitingForOperand) {
+        const result = this.performCalculation();
+        if (result === null) return;
+
+        this.currentValue = String(result);
+        this.previousValue = result;
+        this.updateDisplay();
+      }
+
+      this.waitingForOperand = true;
+      this.operator = nextOperator;
+      this.history = `${this.previousValue} ${nextOperator}`;
+
+      // Visual feedback for operator buttons
+      this.updateOperatorButtons(nextOperator);
+      this.updateDisplay();
+    }
+
+    updateOperatorButtons(activeOperator) {
+      document.querySelectorAll('.btn.operator').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      const activeBtn = document.querySelector(`[data-op="${activeOperator}"]`);
+      if (activeBtn) {
+        activeBtn.classList.add('active');
+      }
+    }
+
+    performCalculation() {
+      const prev = parseFloat(this.previousValue);
+      const current = parseFloat(this.currentValue);
+      let result;
+
+      if (isNaN(prev) || isNaN(current)) return null;
+
+      switch (this.operator) {
+        case '+':
+          result = prev + current;
+          break;
+        case '-':
+          result = prev - current;
+          break;
+        case '×':
+          result = prev * current;
+          break;
+        case '÷':
+          if (current === 0) {
+            this.showError('Cannot divide by zero');
+            return null;
+          }
+          result = prev / current;
+          break;
+        default:
+          return null;
+      }
+
+      return result;
+    }
+
+    calculate() {
+      const result = this.performCalculation();
+      if (result !== null) {
+        this.currentValue = String(result);
+        this.previousValue = '';
+        this.operator = '';
+        this.waitingForOperand = false;
+        this.history += ` ${this.currentValue}`;
+        this.updateOperatorButtons(null);
+        this.updateDisplay();
+        this.shouldResetDisplay = true;
+      }
+    }
+
+    percentage() {
+      const current = parseFloat(this.currentValue);
+      if (!isNaN(current)) {
+        this.currentValue = String(current / 100);
+        this.updateDisplay();
+      }
+    }
+
+    clearAll() {
+      this.currentValue = '0';
+      this.previousValue = '';
+      this.operator = '';
+      this.waitingForOperand = false;
+      this.history = '';
+      this.shouldResetDisplay = false;
+      this.updateOperatorButtons(null);
+      this.updateDisplay();
+    }
+
+    clearEntry() {
+      this.currentValue = '0';
+      this.updateDisplay();
+    }
+
+    showError(message) {
+      const current = document.getElementById('current');
+      current.textContent = message;
+      current.style.color = 'red';
+
+      setTimeout(() => {
+        current.style.color = '#fff';
+        this.updateDisplay();
+      }, 2000);
+    }
+  }
+
+  // Initialize calculator
+  const calc = new Calculator();
+  calc.updateDisplay();
+
+  // Button functions
+  function appendNumber(num) {
+    calc.appendNumber(num);
+  }
+
+  function appendDecimal() {
+    calc.appendDecimal();
+  }
+
+  function setOperator(op) {
+    calc.setOperator(op);
+  }
+
+  function calculate() {
+    calc.calculate();
+  }
+
+  function percentage() {
+    calc.percentage();
+  }
+
+  function clearAll() {
+    calc.clearAll();
+  }
+
+  function clearEntry() {
+    calc.clearEntry();
+  }
+
+  // Keyboard support
+  document.addEventListener('keydown', (e) => {
+    e.preventDefault();
+
+    if (e.key >= '0' && e.key <= '9') {
+      appendNumber(e.key);
+    } else if (e.key === '.') {
+      appendDecimal();
+    } else if (e.key === '+') {
+      setOperator('+');
+    } else if (e.key === '-') {
+      setOperator('-');
+    } else if (e.key === '*') {
+      setOperator('×');
+    } else if (e.key === '/') {
+      setOperator('÷');
+    } else if (e.key === 'Enter' || e.key === '=') {
+      calculate();
+    } else if (e.key === 'Escape') {
+      clearAll();
+    } else if (e.key === 'Backspace') {
+      clearEntry();
+    } else if (e.key === '%') {
+      percentage();
+    }
+  });
+
+  // Button press animation
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('mousedown', () => {
+      btn.style.transform = 'scale(0.95)';
+    });
+
+    btn.addEventListener('mouseup', () => {
+      btn.style.transform = 'scale(1)';
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = 'scale(1)';
+    });
+  });
+</script>
+
+</body>
+</html>
