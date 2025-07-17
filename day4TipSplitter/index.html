@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tip splitter app</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            font-family: 'Franklin Gothic Medium', 'Arial ', Arial, sans-serif;
+            background: linear-gradient(135deg, #606baf 0%, #5c3e7a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container{
+            background: rgba(255, 255 ,255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0 , 0 , 0.1);
+            max-width: 400px;
+            width: 100%;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1{
+            text-align: center;
+            color: #33236b;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            font-weight:700;
+
+        }
+
+       .input-group {
+            margin-bottom: 25px;
+        }
+        label{
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 0.95em;
+
+        }
+
+          input[type="number"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fafafa;
+          }
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .tip-buttons{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tip-btn {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            background: #fafafa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        
+        .tip-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-1px);
+        }
+
+        .tip-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .custom-tip {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .custom-tip input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .results {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+            font-size: 1.2em;
+            font-weight: 700;
+        }
+
+        .result-label {
+            font-weight: 500;
+        }
+
+        .result-value {
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+
+        .split-display {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .split-amount {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .split-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .reset-btn {
+            width: 100%;
+            padding: 15px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .reset-btn:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .tip-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tip Splitter</h1>
+
+        <div class="input-group">
+            <label for="billAmount">Bill Amount (FCFA)</label>
+            <input type="number" id="billAmount" placeholder="0" step="1" min="0">
+        </div>
+
+        <div class="input-group">
+            <label>Tip Percentage</label>
+            <div class="tip-buttons">
+                <button class="tip-btn" data-tip="15">15%</button>
+                <button class="tip-btn" data-tip="18">18%</button>
+                <button class="tip-btn" data-tip="20">20%</button>
+                <button class="tip-btn" data-tip="22">22%</button>
+                <button class="tip-btn" data-tip="25">25%</button>
+                <button class="tip-btn" data-tip="30">30%</button>  
+            </div>
+
+            <div class="custom-tip">
+                <input type="number" id="customTip" placeholder="Custom %" min="0" max="100">
+                <span>%</span>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="peopleCount">Number of People</label>
+            <input type="number" id="peopleCount" placeholder="1" min="1" value="1">
+        </div>
+
+        <div class="results" id="results" style="display:none;">
+            <div class="result-item">
+                <span class="result-label">Subtotal:</span>
+                <span class="result-value" id="subtotal">0 FCFA</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Tip Amount:</span>
+                <span class="result-value" id="tipAmount">0 FCFA</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Total:</span>
+                <span class="result-value" id="total">0 FCFA</span>
+            </div>
+            
+            <div class="split-display">
+                <div class="split-amount" id="perPerson">0 FCFA</div>
+                <div class="split-label">per person</div>
+            </div>
+        </div>
+
+        <button class="reset-btn" onclick="resetCalculator()">Reset</button>
+    </div>
+
+   <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            font-family: Arial,sans-serif;
+            background: rgb(136, 133, 182);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+
+        }
+
+        #count {
+            font-size: 4rem;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .buttons button{
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            
+        }
+
+        button:hover{
+            background: #221f1f;
+            color: aliceblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="counter-container">
+        <h1>Simple Counter App</h1>
+        <p id="count">0</p>
+        <div class="buttons">
+            <button onclick="decrease()">-</button>
+            <button onclick="reset()">Reset</button>
+            <button onclick="increase()">+</button>
+        </div>
+    </div>
+    
+
+
+    <script src="script.js"></script>
+</body>
+</html>
