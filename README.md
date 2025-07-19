@@ -9,9 +9,9 @@ Each day, I build a mini project using HTML, CSS, and JavaScript.
 
 | Day | Project Name    | Description                            | Link       |
 |-----|------------------|----------------------------------------|------------|
-| 1   | Calculator       | A basic calculator with responsive UI  | [View Project](./Day01-Calculator/calculator.html) |
-| 2   | Digital Clock    | A real-time digital clock              | [View Project](./Day02-Clock/clock.html) |
-| 3   | Coming Soon      |                                        |            |
+| 1   | Calculator       | A basic calculator with responsive UI  | [View Project](./day1-Calculator/calculator.html) |
+| 2   | Digital Clock    | A real-time digital clock              | [View Project](./day2Clock/clock.html) |
+| 3   | counter app    |   a professional counter app             |  [View Project](./day3CounterApp/index.html)                      |            |
 
 ---
 
