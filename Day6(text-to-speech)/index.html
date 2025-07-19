@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Advanced Text to Speech</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+      background-color: #f0f8ff;
+    }
+
+    textarea {
+      width: 80%;
+      height: 150px;
+      font-size: 18px;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+
+    select, input[type=range] {
+      margin: 10px;
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 8px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔊 Text-to-Speech App</h1>
+  <textarea id="text" placeholder="Type something..."></textarea><br/>
+
+  <label for="voices">🎤 Choose Voice</label>
+  <select id="voices"></select>
+
+  <label for="rate">🎚 Speed</label>
+  <input type="range" id="rate" min="0.5" max="2" step="0.1" value="1">
+  <span id="rate-value">1</span>
+
+  <label for="pitch">🎚 Pitch</label>
+  <input type="range" id="pitch" min="0" max="2" step="0.1" value="1">
+  <span id="pitch-value">1</span><br>
+
+  <button onclick="speakText()">Speak</button>
+  <button onclick="repeatText()">🔁 Repeat</button>
+
+  <script>
+    const textArea = document.getElementById("text");
+    const voiceSelect = document.getElementById("voices");
+    const rateSlider = document.getElementById("rate");
+    const pitchSlider = document.getElementById("pitch");
+    const rateValue = document.getElementById("rate-value");
+    const pitchValue = document.getElementById("pitch-value");
+
+    let voices = [];
+    let lastUtterance;
+
+    function populateVoices() {
+      voices = window.speechSynthesis.getVoices();
+      voiceSelect.innerHTML = "";
+      voices.forEach((voice, index) => {
+        const option = document.createElement("option");
+        option.value = index;
+        option.textContent = `${voice.name} (${voice.lang})`;
+        voiceSelect.appendChild(option);
+      });
+    }
+
+    // Chrome sometimes loads voices late
+    window.speechSynthesis.onvoiceschanged = populateVoices;
+
+    function speakText() {
+      const text = textArea.value;
+      const utterance = new SpeechSynthesisUtterance(text);
+
+      const selectedVoice = voices[voiceSelect.value];
+      utterance.voice = selectedVoice;
+
+      utterance.rate = parseFloat(rateSlider.value);
+      utterance.pitch = parseFloat(pitchSlider.value);
+
+      lastUtterance = utterance;
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function repeatText() {
+      if (lastUtterance) {
+        window.speechSynthesis.cancel(); // stop any running speech
+        window.speechSynthesis.speak(lastUtterance);
+      }
+    }
+
+    // Update sliders' value display
+    rateSlider.oninput = () => rateValue.textContent = rateSlider.value;
+    pitchSlider.oninput = () => pitchValue.textContent = pitchSlider.value;
+
+    populateVoices();
+  </script>
+
+</body>
+</html>
