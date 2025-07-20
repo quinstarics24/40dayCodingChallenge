@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body{
+            text-align: center;
+            font-family: Arial;
+            background-color: #d3d8db;
+            padding-top: 50px;
+        }
+
+        button{
+            padding: 15px 25px;
+            font-size: 20px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            border: none;
+            background-color: #4caf50;
+            color: white;
+        }
+
+        button:hover{
+            background-color:#416843;
+        }
+
+        #result {
+            font-size: 30px;
+            margin-top: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <h1>Rock Paper Scissors</h1>
+
+    <div class="buttons">
+        <button onclick="playGame('rock')"> 🪨 Rock</button>
+        <button onclick="playGame('paper')">📄 Paper</button>
+        <button onclick="playGame('scissors')">✂️ Scissors</button>
+    </div>
+
+    <h2 id="result">Let's play!</h2>
+    <p id="player-choice"></p>
+    <p id="computer-choice"></p>
+
+
+
+    <script>
+
+        function playGame(playerChoice) {
+  const choices = ["rock", "paper", "scissors"];
+  
+  // Computer picks randomly
+  const computerChoice = choices[Math.floor(Math.random() * 3)];
+
+  // Show choices
+  document.getElementById("player-choice").textContent = "You chose: " + playerChoice;
+  document.getElementById("computer-choice").textContent = "Computer chose: " + computerChoice;
+
+  // Check who wins
+  let result = "";
+
+  if (playerChoice === computerChoice) {
+    result = "It's a Tie!";
+  } else if (
+    (playerChoice === "rock" && computerChoice === "scissors") ||
+    (playerChoice === "scissors" && computerChoice === "paper") ||
+    (playerChoice === "paper" && computerChoice === "rock")
+  ) {
+    result = "🎉 You Win!";
+  } else {
+    result = "😢 You Lose!";
+  }
+
+  // Show result
+  document.getElementById("result").textContent = result;
+}
+
+    </script>
+
+</body>
+</html>
