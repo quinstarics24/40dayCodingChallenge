@@ -2,7 +2,7 @@
 
 This is a fully functional, professional-looking calculator built with **HTML**, **CSS**, and **JavaScript**. It supports basic arithmetic operations such as addition, subtraction, multiplication, and division. It also includes features like a clear button, delete/backspace, decimal input, and memory storage.
 
-![Calculator Screenshot](./screenshot.png)
+![Calculator Screenshot](screenshot.png)
 
 ---
 
@@ -25,14 +25,3 @@ This is a fully functional, professional-looking calculator built with **HTML**,
 - **CSS3** – Styling and layout (black theme)
 - **JavaScript** – Functionality and operations
 
----
-
-## 📸 Screenshot
-
-> 📌 `screenshot.png` 
-
----
-
-## 🚀 Getting Started
-
-To run this calculator on your local computer:

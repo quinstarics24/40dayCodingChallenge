@@ -1,7 +1,7 @@
 # 🔊 Text-to-Speech App
 
 A simple web app that reads out loud whatever you type! Built with HTML and JavaScript, using the browser's built-in speech system.
-![text-to-speech Screenshot](./Screenshot.png)
+![text-to-speech Screenshot](screenshot.png)
 ---
 
 ## 🚀 Features

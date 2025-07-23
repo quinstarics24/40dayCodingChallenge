@@ -5,7 +5,7 @@ This is a simple and responsive modal pop-up built using pure HTML, CSS, and Jav
 
  Demo Screenshot
 
-![Modal Demo Screenshot](Screenshot.png)
+![Modal Demo Screenshot](screenshot.png)
 
  Features
 

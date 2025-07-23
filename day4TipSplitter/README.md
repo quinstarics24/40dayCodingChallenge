@@ -2,7 +2,7 @@
 
 A beautiful, responsive tip calculator and bill splitter web application built with HTML, CSS, and JavaScript. Perfect for splitting restaurant bills among friends or calculating tips quickly and accurately.
 
-![Tip Splitter Screenshot](./Screenshot.png)
+![Tip Splitter Screenshot](screenshot.png)
 ## 🌟 Features
 
 - **Modern UI**: Clean, gradient-based design with smooth animations
