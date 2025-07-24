@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tab-section</title>
+
+    <style>
+        body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.tabs {
+  max-width: 600px;
+  margin: auto;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.tab-buttons {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+}
+
+.tab {
+  flex: 1;
+  padding: 15px;
+  background: #f1f1f1;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.tab:hover {
+  background: #ddd;
+}
+
+.tab.active {
+  background: #fff;
+  font-weight: bold;
+}
+
+.tab-content {
+  padding: 20px;
+}
+
+.content {
+  display: none;
+}
+
+.content.active {
+  display: block;
+}
+
+    </style>
+</head>
+<body>
+    <div class="tabs">
+        <div class="tab-buttons">
+            <button class="tab active" data-tab=" home">Home</button>
+            <button class="tab" data-tab=" about">About</button>
+            <button class="tab" data-tab="contact">Contact</button>
+
+        </div>
+        <div class="tab-content">
+            <div id="home" class="content active">
+                <h2>welcome Home </h2>
+                <p>This is the home tab content</p>
+            </div>
+            <div id="about" class="content">
+                <h2>About Us</h2>
+                <p>this tab tells you more about us.</p>
+            </div>
+            <div id="contact " class="content">
+                <h2>Contact Us</h2>
+                <p>Get in touch through this tab/p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const tabs = document.querySelectorAll(".tab");
+const contents = document.querySelectorAll(".content");
+
+tabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+    // Remove active class from all tabs
+    tabs.forEach(btn => btn.classList.remove("active"));
+
+    // Add active class to clicked tab
+    tab.classList.add("active");
+
+    // Hide all content
+    contents.forEach(content => content.classList.remove("active"));
+
+    // Show content related to clicked tab
+    const selected = tab.getAttribute("data-tab");
+    document.getElementById(selected).classList.add("active");
+  });
+});
+
+
+    </script>
+</body>
+</html>
