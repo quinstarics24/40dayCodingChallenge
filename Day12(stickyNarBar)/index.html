@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sticky Navbar</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background-color: #332588;
+      color: white;
+      padding: 10px 20px;
+      z-index: 1000;
+    }
+
+    nav a {
+       align-items: center;
+      color: white;
+      text-decoration: none;
+      margin-right: 20px;
+      font-weight: bold;
+    }
+
+    section {
+      padding: 100px 20px;
+      height: 100vh;
+    }
+
+    section:nth-child(even) {
+      background-color: #f4f4f4;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <section><h2>Welcome</h2></section>
+  <section><h2>About Us</h2></section>
+  <section><h2>Services</h2></section>
+  <section><h2>Contact</h2></section>
+</body>
+</html>
