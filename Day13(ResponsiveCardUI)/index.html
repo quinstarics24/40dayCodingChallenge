@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3 by 1 Responsive UI Card</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+
+    body {
+      background-color: #f2f2f2;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 40px;
+      color: #333;
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .cards {
+      background-color: #646060;
+      flex: 1 1 calc(20.33% - 20px); 
+      max-width: 300px;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.3s;
+    }
+
+    .cards:hover {
+      transform: scale(1.05);
+    }
+
+    .cards img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .cards {
+        flex: 1 1 calc(50% - 40px); /* 2 cards per row on tablets */
+      }
+    }
+
+    @media (max-width: 600px) {
+      .cards {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Simple Responsive UI Card </h2>
+  <div class="card-container">
+    <div class="cards">
+      <img src="image.jpg" alt="Card 1">
+    </div>
+
+    <div class="cards">
+      <img src="image.jpg" alt="Card 2">
+    </div>
+
+    <div class="cards">
+      <img src="image.jpg" alt="Card 3">
+    </div>
+  </div>
+
+</body>
+</html>
