@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.form-container {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.form-step {
+  display: none;
+}
+
+.form-step.active {
+  display: block;
+}
+
+
+    </style>
+</head>
+<body>
+    
+    <div class="form-container">
+        <form id="multiStepForm">
+
+            <!-- step 1 -->
+             <div class="form-step active">
+                <h2>step 1: Personal Info</h2>
+                 <input type="text" placeholder="First Name" required/>
+                 <input type="text" placeholder="Last Name" required />
+                <button type="button" class="next-btn">Next</button>
+             </div>
+
+                   <!-- Step 2 -->
+            <div class="form-step">
+                 <h2>Step 2: Contact Info</h2>
+                 <input type="email" placeholder="Email" required />
+                 <input type="tel" placeholder="Phone" required />
+                 <button type="button" class="prev-btn">Back</button>
+                 <button type="button" class="next-btn">Next</button>
+            </div>
+
+              <!-- Step 3 -->
+            <div class="form-step">
+                <h2>Step 3: Confirm</h2>
+                <p>Click Submit if all your info is correct.</p>
+                <button type="button" class="prev-btn">Back</button>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+const steps = document.querySelectorAll(".form-step");
+const nextBtns = document.querySelectorAll(".next-btn");
+const prevBtns = document.querySelectorAll(".prev-btn");
+
+let currentStep = 0;
+
+nextBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    steps[currentStep].classList.remove("active");
+    currentStep++;
+    steps[currentStep].classList.add("active");
+  });
+});
+
+prevBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    steps[currentStep].classList.remove("active");
+    currentStep--;
+    steps[currentStep].classList.add("active");
+  });
+});
+
+    </script>
+</body>
+</html>
