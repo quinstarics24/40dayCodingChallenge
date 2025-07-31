@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GitHub User Fetcher</title>
+  <style>
+    body {
+      background: #f3f4f6;
+      font-family: sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      display: inline-block;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input {
+      padding: 10px;
+      width: 250px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 15px;
+      margin-left: 10px;
+      background: #24292e;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #profile {
+      margin-top: 20px;
+    }
+    img {
+      border-radius: 5%;
+      width: 120px;
+      height: 120px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>GitHub User Fetcher</h1>
+    <input type="text" id="username" placeholder="Enter GitHub Username" />
+    <button onclick="fetchGitHubUser()">Fetch Profile</button>
+    <div id="profile"></div>
+  </div>
+
+
+  <script>
+    async function fetchGitHubUser() {
+      const username = document.getElementById("username").value;
+      const profile = document.getElementById("profile");
+      profile.innerHTML = "Loading...";
+
+      try {
+        const res = await fetch(`https://api.github.com/users/${username}`);
+        if (!res.ok) throw new Error("User not found");
+
+        const user = await res.json();
+
+        profile.innerHTML = `
+          <img src="${user.avatar_url}" alt="${user.login}" />
+          <h2>${user.name || user.login}</h2>
+          <p>${user.bio || "No bio available"}</p>
+          <p>📁 Public Repos: ${user.public_repos}</p>
+          <p>👥 Followers: ${user.followers} | Following: ${user.following}</p>
+          <a href="${user.html_url}" target="_blank">View on GitHub</a>
+        `;
+      } catch (err) {
+        profile.innerHTML = `<p style="color:red;">❌ ${err.message}</p>`;
+      }
+    }
+  </script>
+
+</body>
+</html>
