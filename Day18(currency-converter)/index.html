@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Currency Converter</title>
+<style>
+    body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f0f4f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.converter {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  text-align: center;
+  width: 300px;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.select-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.select-group select {
+  width: 45%;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+#result {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #333;
+}
+
+</style>
+</head>
+<body>
+  <div class="converter">
+    <h1>Currency Converter</h1>
+    
+    <div class="input-group">
+      <input type="number" id="amount" placeholder="Enter amount" />
+    </div>
+
+    <div class="select-group">
+      <select id="fromCurrency"></select>
+      <span>to</span>
+      <select id="toCurrency"></select>
+    </div>
+
+    <button onclick="convertCurrency()">Convert</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+const apiKey = 'https://api.exchangerate-api.com/v4/latest/USD'; // or use https://open.er-api.com/v6/latest/USD
+
+const fromCurrency = document.getElementById('fromCurrency');
+const toCurrency = document.getElementById('toCurrency');
+const amountInput = document.getElementById('amount');
+const result = document.getElementById('result');
+
+// Load currency options
+fetch(apiKey)
+  .then(res => res.json())
+  .then(data => {
+    const currencies = Object.keys(data.rates);
+
+    currencies.forEach(currency => {
+      const option1 = document.createElement('option');
+      const option2 = document.createElement('option');
+      option1.value = option2.value = currency;
+      option1.text = option2.text = currency;
+      fromCurrency.add(option1);
+      toCurrency.add(option2);
+    });
+
+    fromCurrency.value = 'USD';
+    toCurrency.value = 'EUR';
+  });
+
+function convertCurrency() {
+  const amount = parseFloat(amountInput.value);
+  const from = fromCurrency.value;
+  const to = toCurrency.value;
+
+  if (isNaN(amount)) {
+    result.innerText = 'Please enter a valid number';
+    return;
+  }
+
+  fetch(`https://api.exchangerate-api.com/v4/latest/${from}`)
+    .then(res => res.json())
+    .then(data => {
+      const rate = data.rates[to];
+      const converted = (amount * rate).toFixed(2);
+      result.innerText = `${amount} ${from} = ${converted} ${to}`;
+    })
+    .catch(() => {
+      result.innerText = 'Error fetching exchange rate.';
+    });
+}
+
+  </script>
+</body>
+</html>
