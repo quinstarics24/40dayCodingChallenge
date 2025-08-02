@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Search App</title>
+ <style>
+    body {
+  font-family: Arial, sans-serif;
+  background: #f1f1f1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  width: 300px;
+  text-align: center;
+}
+
+#searchInput {
+  padding: 10px;
+  width: 100%;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 10px;
+  background: #eee;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+li:hover {
+  background: #dcdcdc;
+}
+
+ </style>
+</head>
+<body>
+  <div class="container">
+    <h1></h1>Live Search App</h1>
+    <input type="text" id="searchInput" placeholder="Type to search...">
+    <ul id="itemList">
+      <li>JavaScript</li>
+      <li>Python</li>
+      <li>React</li>
+      <li>Node.js</li>
+      <li>HTML</li>
+      <li>CSS</li>
+      <li>Vue</li>
+      <li>PHP</li>
+    </ul>
+  </div>
+  <script>
+    const searchInput = document.getElementById('searchInput');
+const itemList = document.getElementById('itemList');
+const items = itemList.getElementsByTagName('li');
+
+searchInput.addEventListener('keyup', function() {
+  const searchTerm = searchInput.value.toLowerCase();
+
+  Array.from(items).forEach(item => {
+    const text = item.textContent.toLowerCase();
+    if (text.includes(searchTerm)) {
+      item.style.display = '';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+});
+
+  </script>
+</body>
+</html>
