@@ -16,7 +16,7 @@ A simple web app to track daily expenses using browser localStorage. Built with 
 3. Click "Add" to save it.
 4. Refresh page – your data is still there!
 
-## 📚 What You Learn
+## 📚 What i have  Learnt
 - DOM manipulation
 - Storing data in localStorage
 - Updating the UI dynamically
