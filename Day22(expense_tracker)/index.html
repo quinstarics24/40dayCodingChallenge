@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Expense Tracker</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f7f7f7;
+    }
+    form input, form button {
+      margin: 5px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    li {
+      list-style: none;
+      background: #fff;
+      margin: 5px 0;
+      padding: 10px;
+      border-left: 4px solid green;
+      display: flex;
+      justify-content: space-between;
+    }
+    button.delete {
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Expense Tracker</h2>
+  <form id="expense-form">
+    <input type="text" id="title" placeholder="Expense name" required />
+    <input type="number" id="amount" placeholder="Amount (FCFA)" required />
+    <button type="submit">Add</button>
+  </form>
+
+  <ul id="expense-list"></ul>
+
+  <h3>Total: <span id="total">0</span> FCFA</h3>
+
+  <script>
+    let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+
+    function renderExpenses() {
+      const list = document.getElementById('expense-list');
+      const total = document.getElementById('total');
+      list.innerHTML = '';
+      let sum = 0;
+
+      expenses.forEach((expense, index) => {
+        sum += expense.amount;
+        const li = document.createElement('li');
+        li.textContent = `${expense.title} - ${expense.amount} FCFA`;
+        const delBtn = document.createElement('button');
+        delBtn.textContent = "❌";
+        delBtn.className = "delete";
+        delBtn.onclick = () => {
+          expenses.splice(index, 1);
+          updateLocalStorage();
+          renderExpenses();
+        };
+        li.appendChild(delBtn);
+        list.appendChild(li);
+      });
+
+      total.textContent = sum;
+    }
+
+    function updateLocalStorage() {
+      localStorage.setItem('expenses', JSON.stringify(expenses));
+    }
+
+    document.getElementById('expense-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const title = document.getElementById('title').value.trim();
+      const amount = parseInt(document.getElementById('amount').value.trim());
+
+      if (title && !isNaN(amount)) {
+        expenses.push({ title, amount });
+        updateLocalStorage();
+        renderExpenses();
+        this.reset();
+      }
+    });
+
+    renderExpenses();
+  </script>
+</body>
+</html>
