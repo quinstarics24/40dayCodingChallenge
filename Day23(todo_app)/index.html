@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+ <style>
+  body {
+  font-family: Arial, sans-serif;
+  background-color: #f3f4f6;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.input-area {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.input-area input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+
+.input-area button {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.input-area button:hover {
+  background: #2563eb;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9fafb;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.task-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.task.completed .task-text span {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.check {
+  color: #9ca3af;
+}
+
+.task.completed .check {
+  color: #10b981;
+}
+
+.delete {
+  color: #ef4444;
+}
+
+ </style>
+</head>
+<body>
+  <div class="container">
+    <h1>To-Do List</h1>
+    <div class="input-area">
+      <input type="text" id="taskInput" placeholder="Add a new task...">
+      <button id="addBtn">Add</button>
+    </div>
+    <div id="taskList" class="task-list"></div>
+  </div>
+
+  <script>
+    const taskInput = document.getElementById("taskInput");
+const addBtn = document.getElementById("addBtn");
+const taskList = document.getElementById("taskList");
+
+let tasks = [];
+
+function renderTasks() {
+  taskList.innerHTML = "";
+  tasks.forEach((task, index) => {
+    const taskItem = document.createElement("div");
+    taskItem.className = `task ${task.completed ? "completed" : ""}`;
+
+    taskItem.innerHTML = `
+      <div class="task-text">
+        <span class="icon check" onclick="toggleTask(${index})">&#10003;</span>
+        <span>${task.text}</span>
+      </div>
+      <span class="icon delete" onclick="deleteTask(${index})">&#128465;</span>
+    `;
+
+    taskList.appendChild(taskItem);
+  });
+}
+
+function addTask() {
+  const text = taskInput.value.trim();
+  if (text !== "") {
+    tasks.push({ text, completed: false });
+    taskInput.value = "";
+    renderTasks();
+  }
+}
+
+function toggleTask(index) {
+  tasks[index].completed = !tasks[index].completed;
+  renderTasks();
+}
+
+function deleteTask(index) {
+  tasks.splice(index, 1);
+  renderTasks();
+}
+
+addBtn.addEventListener("click", addTask);
+taskInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") addTask();
+});
+
+  </script>
+</body>
+</html>
