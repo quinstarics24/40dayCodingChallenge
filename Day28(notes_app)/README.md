@@ -4,7 +4,7 @@ A very simple note-taking app using **HTML, CSS, and JavaScript**.
 Notes are saved in the browser's **localStorage**, so they remain even after refreshing the page.
 
 ## 🖼 Screenshot
-![ Screenshot](screenshot.png)
+![ Screenshot](screensho.png)
 ##  Features
 - Write and save notes.
 - View saved notes instantly.
