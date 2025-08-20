@@ -1,0 +1,217 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #eaf7f4; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+/* Form Container */
+.container {
+  background: #ffffff;
+  padding: 25px 30px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Heading */
+.contact-form h2 {
+  text-align: left;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+/* Labels */
+label {
+  font-size: 14px;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+/* Required Asterisk */
+label span {
+  color: red;
+}
+
+/* Input Fields */
+input[type="text"],
+input[type="email"],
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+  margin-bottom: 15px;
+  transition: border 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #008060;
+}
+
+/* Two-column row */
+.row {
+  display: flex;
+  gap: 15px;
+}
+
+.row .form-group {
+  flex: 1;
+}
+
+/* Radio Group */
+.radio-group {
+  display: flex;
+  gap: 20px;
+  margin: 10px 0;
+}
+
+.radio-group input {
+  margin-right: 6px;
+}
+
+/* Checkbox */
+.checkbox {
+  margin: 15px 0;
+  font-size: 14px;
+}
+
+/* Submit Button */
+button {
+  width: 100%;
+  background-color: #008060; 
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #006a4d;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    body {
+  font-family: Arial, sans-serif;
+  background-color: #eaf7f4; /* same green shade background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+/* Form Container */
+.container {
+  background: #ffffff;
+  padding: 25px 30px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Heading */
+.contact-form h2 {
+  text-align: left;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+/* Labels */
+label {
+  font-size: 14px;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+/* Required Asterisk */
+label span {
+  color: red;
+}
+
+/* Input Fields */
+input[type="text"],
+input[type="email"],
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+  margin-bottom: 15px;
+  transition: border 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #008060;
+}
+
+/* Two-column row */
+.row {
+  display: flex;
+  gap: 15px;
+}
+
+.row .form-group {
+  flex: 1;
+}
+
+/* Radio Group */
+.radio-group {
+  display: flex;
+  gap: 20px;
+  margin: 10px 0;
+}
+
+.radio-group input {
+  margin-right: 6px;
+}
+
+/* Checkbox */
+.checkbox {
+  margin: 15px 0;
+  font-size: 14px;
+}
+
+/* Submit Button */
+button {
+  width: 100%;
+  background-color: #008060; /* dark green like screenshot */
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #006a4d;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .row {
+    flex-direction: column;
+  }
+}
+}
